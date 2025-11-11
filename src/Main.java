@@ -1,13 +1,47 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-  //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-  // to see how IntelliJ IDEA suggests fixing it.
-  IO.println(String.format("Hello and welcome!"));
+import java.util.Scanner;
 
-  for (int i = 1; i <= 5; i++) {
-    //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-    // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-    IO.println("i = " + i);
-  }
+
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+
+
+
+
+    public static void inscribirEquipos() {
+        int equipos = 0;
+        boolean valido = false;
+        do {
+            try {
+                System.out.println("Cuantos equipos hay (Debe de ser par) ");
+                equipos = sc.nextInt();
+
+
+                if (equipos % 2 == 0 && equipos > 0) {
+                    valido = true;
+                } else {
+                    System.out.println("Escribe un numero par");
+                }
+            } catch (Exception e) {
+                System.out.println("Escribe un numero par");
+            }
+        } while (!valido);
+        System.out.println("Inscribir equipos");
+        for (int i = 1; i <= equipos; i++) {
+            System.out.println("Nombre del equipo " + i);
+            String nombre = sc.next();
+
+
+            System.out.println("Fecha de fecha de fundación " + i);
+            int fecha  = sc.nextInt();
+
+
+            datosJuagadores();
+        }
+    }
+
+
+    public static void main(String[] args) {
+        inscribirEquipos();
+    }
 }
+
