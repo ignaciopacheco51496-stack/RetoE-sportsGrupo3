@@ -11,7 +11,9 @@ public class Main {
   static int numerojugadores;
   static int numeroequipos;
   static  Matcher matt;
-  static  int sueldo;;
+  static  int sueldo;
+  static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
   public static void main(String[] args) {
     JOptionPane.showMessageDialog(null, "Vamos a registrar los datos de los equipos de E-sports");
     while (true) {
@@ -29,6 +31,7 @@ public class Main {
       }
     }
     datos_de_equipos();
+
   }
 
 
@@ -38,7 +41,6 @@ public class Main {
       ++i;
       String nombreequipo = JOptionPane.showInputDialog(null, "Ingrese el nombre del equipo");
       LocalDate fechaCreacion;
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
       while (true) {
         try {
           String fecha = JOptionPane.showInputDialog(null, "Ingrese la fecha de creación del equipo (dd/MM/yyyy)");
@@ -77,6 +79,34 @@ public class Main {
       ++i;
       String nombrejugador= JOptionPane.showInputDialog(null, "Ingrese el nombre del jugador");
       String apellidojugador= JOptionPane.showInputDialog(null, "Ingrese el apellido de jugador");
+      LocalDate fechanacimiento;
+      while (true) {
+        String fecha = JOptionPane.showInputDialog(null, "Ingrese la fecha de nacimiento (dd/MM/yyyy)");
+
+        try {
+          fechanacimiento = LocalDate.parse(fecha.trim(), formatter);
+
+          LocalDate hoy = LocalDate.now();
+          int edad = hoy.getYear() - fechanacimiento.getYear();
+
+          if (fechanacimiento.isAfter(hoy)) {
+            JOptionPane.showMessageDialog(null, "La fecha de nacimiento no puede ser futura.");
+            continue;
+          } else if (edad < 14) {
+            JOptionPane.showMessageDialog(null, "El jugador debe tener al menos 14 años.");
+            continue;
+          } else if (edad > 60) {
+            JOptionPane.showMessageDialog(null, "El jugador no puede tener más de 60 años para jugar.");
+            continue;
+          }
+
+          break;
+
+        } catch (DateTimeParseException e) {
+          JOptionPane.showMessageDialog(null, "Formato incorrecto. Use el formato dd/MM/yyyy.");
+        }
+      }
+
       String nacionalidadjugador= JOptionPane.showInputDialog(null, "Ingrese el nacionalidad de jugador");
       String nicknamejugador= JOptionPane.showInputDialog(null, "Ingrese el nickname");
       String roljugador= JOptionPane.showInputDialog(null, "Ingrese el rol");
