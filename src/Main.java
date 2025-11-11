@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,8 +14,20 @@ public class Main {
   static  int sueldo;;
   public static void main(String[] args) {
     JOptionPane.showMessageDialog(null, "Vamos a registrar los datos de los equipos de E-sports");
-    String equipos = JOptionPane.showInputDialog(null, "Ingrese cuantos equipos hay.(El numero debe de ser par)");
-    numeroequipos = Integer.parseInt(equipos);
+    while (true) {
+      try {
+        String equipos = JOptionPane.showInputDialog(null, "Ingrese cuántos equipos hay (el número debe ser par)");
+        numeroequipos = Integer.parseInt(equipos);
+
+        if (numeroequipos > 0 && numeroequipos % 2 == 0) {
+          break;
+        } else {
+          JOptionPane.showMessageDialog(null, "Debe ingresar un número PAR y mayor que 0.");
+        }
+      } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Por favor, ingrese un número válido.");
+      }
+    }
     datos_de_equipos();
   }
 
@@ -24,9 +37,17 @@ public class Main {
     do {
       ++i;
       String nombreequipo = JOptionPane.showInputDialog(null, "Ingrese el nombre del equipo");
-      String fecha= JOptionPane.showInputDialog(null, "Ingrese el fecha de creacion del equipo(dd/MM/yyyy)");
+      LocalDate fechaCreacion;
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-      LocalDate fechaCreacion = LocalDate.parse(fecha, formatter);
+      while (true) {
+        try {
+          String fecha = JOptionPane.showInputDialog(null, "Ingrese la fecha de creación del equipo (dd/MM/yyyy)");
+          fechaCreacion = LocalDate.parse(fecha, formatter);
+          break;
+        } catch (DateTimeParseException e) {
+          JOptionPane.showMessageDialog(null, "Formato incorrecto. Use el formato dd/MM/yyyy.");
+        }
+      }
       String jugadores= JOptionPane.showInputDialog(null, "Ingrese cuantos jugadores hay en el equipo");
       Pattern pat = Pattern.compile("^[2-6]$");
       Matcher mat = pat.matcher(jugadores);
