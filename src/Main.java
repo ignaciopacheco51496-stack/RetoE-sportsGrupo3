@@ -1,13 +1,34 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-  //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-  // to see how IntelliJ IDEA suggests fixing it.
-  IO.println(String.format("Hello and welcome!"));
+import javax.swing.*;
+import java.util.Scanner;
 
-  for (int i = 1; i <= 5; i++) {
-    //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-    // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-    IO.println("i = " + i);
-  }
+public class Main {
+    public static void main(String[] args) {
+        try {
+            imprimir();
+        }catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+    }
+    public static void imprimir(){
+        JOptionPane.showInputDialog(null,"Ingrese el numero de equipos:");
+        solicitarEquipos();
+        JOptionPane.showInputDialog(null,"Ingrese el numero jugadores de su equipo" 0+numeroEquipos":");
+        solicitarJugadoresEquipos();
+        JOptionPane.showInputDialog(null,"Ingrese nombre de su jugadores en orden:"+);
+
+
+    }
+    public static void solicitarEquipos(){
+        int cantidadEquipos;
+        int numeroEquipos=0;
+        Scanner sc = new Scanner(System.in);
+
+    }
+    public static void solicitarJugadoresEquipos(){
+        int cantidadJugadoresEquipos;
+        Scanner sc = new Scanner(System.in);
+
+    }
+
 }
