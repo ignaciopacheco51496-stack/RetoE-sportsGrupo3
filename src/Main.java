@@ -43,8 +43,14 @@ public class Main {
       LocalDate fechaCreacion;
       while (true) {
         try {
+          LocalDate hoy = LocalDate.now();
           String fecha = JOptionPane.showInputDialog(null, "Ingrese la fecha de creación del equipo (dd/MM/yyyy)");
           fechaCreacion = LocalDate.parse(fecha, formatter);
+
+          if (fechaCreacion.isAfter(hoy)) {
+            JOptionPane.showMessageDialog(null, "La fecha de creacion no puede ser futura.");
+            continue;
+          }
           break;
         } catch (DateTimeParseException e) {
           JOptionPane.showMessageDialog(null, "Formato incorrecto. Use el formato dd/MM/yyyy.");
@@ -93,7 +99,7 @@ public class Main {
             JOptionPane.showMessageDialog(null, "La fecha de nacimiento no puede ser futura.");
             continue;
           } else if (edad < 14) {
-            JOptionPane.showMessageDialog(null, "El jugador debe tener al menos 14 años.");
+            JOptionPane.showMessageDialog(null, "El jugador debe tener al menos 14 años o que los cumpla este mismo año.");
             continue;
           } else if (edad > 60) {
             JOptionPane.showMessageDialog(null, "El jugador no puede tener más de 60 años para jugar.");
