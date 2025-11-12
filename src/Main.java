@@ -16,7 +16,8 @@ public class Main {
 
   public static void main(String[] args) {
     JOptionPane.showMessageDialog(null, "Vamos a registrar los datos de los equipos de E-sports");
-    while (true) {
+    boolean e = false;
+    while (e == true) {
       try {
         String equipos = JOptionPane.showInputDialog(null, "Ingrese cuántos equipos hay (el número debe ser par)");
         numeroequipos = Integer.parseInt(equipos);
@@ -37,11 +38,12 @@ public class Main {
 
   public static void datos_de_equipos(){
     int i=0;
+    boolean e = false;
     do {
       ++i;
       String nombreequipo = JOptionPane.showInputDialog(null, "Ingrese el nombre del equipo");
       LocalDate fechaCreacion;
-      while (true) {
+      while (e==true) {
         try {
           LocalDate hoy = LocalDate.now();
           String fecha = JOptionPane.showInputDialog(null, "Ingrese la fecha de creación del equipo (dd/MM/yyyy)");
@@ -81,12 +83,13 @@ public class Main {
 
   public static void jugadores(){
     int i=0;
+    boolean e = false;
     do {
       ++i;
       String nombrejugador= JOptionPane.showInputDialog(null, "Ingrese el nombre del jugador");
       String apellidojugador= JOptionPane.showInputDialog(null, "Ingrese el apellido de jugador");
       LocalDate fechanacimiento;
-      while (true) {
+      while (e == true) {
         String fecha = JOptionPane.showInputDialog(null, "Ingrese la fecha de nacimiento (dd/MM/yyyy)");
 
         try {
