@@ -52,8 +52,8 @@ public class Main {
 
     }
     public static void inscricionEquipo(){
-    }
-    Pattern patronNombreValido = Pattern.compile("^[a-zA-Z0-9]*$]");
+
+    Pattern patronNombreValido = Pattern.compile("^[a-zA-Z0-9]*$");
     String nombreEquipo;
     boolean nombreValido = false;
     do {
@@ -69,30 +69,38 @@ public class Main {
         }
     }while(nombreValido==false);
     int numJugadores = 0;
-    while(numJugadores < 2 || numJugadores > 6){
+    while(numJugadores < 2 || numJugadores > 6) {
         try {
             String cantNumJugadores = JOptionPane.showInputDialog("Cuantos jugadores tiene tu equipo (min: 2, max: 6):");
             if (cantNumJugadores == null) {
                 return;
 
-          } else {
-                String[] jugadores = cantNumJugadores.split(",");
-                numJugadores = Integer.parseInt(jugadores[0]);
-
+            } else {
+                numJugadores = Integer.parseInt(cantNumJugadores);
+                if (numJugadores < 2 || numJugadores > 6) {
+                    JOptionPane.showMessageDialog(null, "Error en la cantidad de jugadores");
+                }
 
             }
-        }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Error ingrese un caracter numerico numero");
+            numJugadores = 0;
 
+
+        }
+    }
 
     }
     public static void calendario(){
-
+        System.out.print("Ingrese el nombre del equipo: ");
 
     }
     public static void resultados(){
+        System.out.print("Ingrese el nombre del equipo: ");
 
     }
     public static void resumen(){
+        System.out.print("Ingrese el nombre del equipo: ");
 
     }
 
