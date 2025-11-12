@@ -1,7 +1,9 @@
-package PACKAGE_NAME;
+class DatoNoValidoException extends Exception {
+    public DatoNoValidoException() {
+        super("Dato no válido");
+    }
 
-public class DatoNoValidoException extends RuntimeException {
-  public DatoNoValidoException(String message) {
-    super(message);
-  }
+    public DatoNoValidoException(String mensaje) {
+        super(mensaje);
+    }
 }
