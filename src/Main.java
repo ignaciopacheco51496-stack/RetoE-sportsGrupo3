@@ -3,16 +3,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-
 public class Main {
     static Scanner sc = new Scanner(System.in);
     static DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     static final double SALARIO_MINIMO = 1500.0;
     public static void main(String[] args) {
         inscribirEquipos();
+        menuInscribir();
         sc.close();
     }
-
 
 public static void inscribirEquipos() {
     int equipos = 0;
@@ -21,7 +20,6 @@ public static void inscribirEquipos() {
         try {
             System.out.println("Cuantos equipos hay (Debe de ser par) ");
             equipos = sc.nextInt();
-
 
             if (equipos % 2 == 0 && equipos > 0) {
                 valido = true;
@@ -46,7 +44,6 @@ public static void inscribirEquipos() {
                 String fechaTexto = sc.nextLine();
                 fechaFundacion = LocalDate.parse(fechaTexto, formatoFecha);
 
-                // Validar que la fecha sea menor que hoy
                 if (fechaFundacion.isBefore(LocalDate.now())) {
                     fechaValida = true;
                 } else {
@@ -63,7 +60,6 @@ public static void inscribirEquipos() {
         do {
             System.out.print("Cuantos jugadores tiene " + nombreEquipo + "? (mínimo 2, máximo 6): ");
             numJugadores = sc.nextInt();
-            sc.nextLine();
 
             if (numJugadores >= 2 && numJugadores <= 6) {
                 jugadoresValidos = true;
@@ -80,6 +76,7 @@ public static void inscribirEquipos() {
         System.out.println("Fecha de fundación del equipo: " + fechaFundacion.format(formatoFecha));
 
         for (int numJugador = 1; numJugador <= numJugadores; numJugador++) {
+            sc.nextLine();
             System.out.println("Jugador " + numJugador + ":");
 
             System.out.print("Nombre: ");
@@ -115,22 +112,41 @@ public static void inscribirEquipos() {
             System.out.print("Nickname: ");
             String nickname = sc.nextLine();
 
-            System.out.print("Rol: ");
-            String rol = sc.nextLine();
+            String rol = "";
+            boolean rolValido = false;
+            do {
+                try {
+                    System.out.print("Rol (Duelista, Controlador, Iniciador, Centinela): ");
+                    rol = sc.nextLine().trim();
+
+                    String rolMinuscula = rol.toLowerCase();
+
+                    if (rolMinuscula.equals("duelista") || rolMinuscula.equals("controlador") ||
+                            rolMinuscula.equals("iniciador") || rolMinuscula.equals("centinela")) {
+                        rolValido = true;
+                        rol = rol.substring(0,1).toUpperCase() + rol.substring(1).toLowerCase();
+                    } else {
+                        System.out.println("Rol inválido. Debe ser: Duelista, Controlador, Iniciador o Centinela.");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error al leer el rol. Intenta de nuevo.");
+                    sc.nextLine();
+                }
+            } while (!rolValido);
 
 
             double sueldo = 0;
             boolean sueldoValido = false;
             do {
                 try {
-                    System.out.print("Sueldo (€): ");
+                    System.out.print("Sueldo mayor de 1500: ");
                     sueldo = sc.nextDouble();
                     sc.nextLine();
 
                     if (sueldo > SALARIO_MINIMO) {
                         sueldoValido = true;
                     } else {
-                        System.out.printf("Sueldo debe ser mayor al salario minimo ", SALARIO_MINIMO);
+                        System.out.println("Sueldo debe ser mayor al " + SALARIO_MINIMO);
                     }
                 } catch (Exception e) {
                     System.out.println("Introduce el sueldo mayor de 1500€");
@@ -139,16 +155,43 @@ public static void inscribirEquipos() {
             } while (!sueldoValido);
 
             System.out.println("Jugador registrado correctamente:");
-            System.out.println("Nombre completo: " + nombre + " " + apellido);
-            System.out.println("Nacionalidad: " + nacionalidad);
-            System.out.println("Fecha de nacimiento: " + fechaNacimiento.format(formatoFecha));
-            System.out.println("Nickname: " + nickname);
-            System.out.println("Rol: " + rol);
-            System.out.println("Sueldo: " + sueldo);
-
-            System.out.println("Resumen del equipo " + nombreEquipo + ":");
-            System.out.println("Jugador: " + nombre + " | Rol: " + rol);
+            System.out.println("Datos del Jugador: " + nombre + " | Rol: " + rol);
         }
+    }
+
+    public static void inscribirJugadores() {
+        sc.nextLine();
+        System.out.println("INSCRIBIR NUEVOS JUGADORES");
+        System.out.print("Equipo al que pertenece el jugador: ");
+        String nombreEquipo = sc.nextLine();
+
+       datosJugadores(1, nombreEquipo, LocalDate.now());
+    }
+
+    public static void menuInscribir() {
+        int opcion;
+        do{
+            System.out.println("  MENU DE INSCRIBCION  ");
+            System.out.println("1) INSCRIBIR MAS EQUIPOS");
+            System.out.println("2) INSCRIBIR MAS JUGADORES");
+            System.out.println("3) SALIR");
+
+            opcion = sc.nextInt();
+
+            switch (opcion){
+                case 1:
+                    inscribirEquipos();
+                    break;
+                case 2:
+                    inscribirJugadores();
+                    break;
+                case 3:
+                    System.out.println("Cerrando programa");
+                    break;
+                default:
+                    System.out.println("Opcion invalida");
+            }
+        } while (opcion != 3);
     }
 }
 
