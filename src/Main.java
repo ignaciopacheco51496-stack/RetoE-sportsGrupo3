@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
@@ -13,9 +14,6 @@ public class Main
     private static LocalDate fecha;
     private static LocalDate fechaequipo;
     private static int jugadores;
-
-
-
     private static LocalDate fechaMasPequeña=LocalDate.of(9999,12,31);
     private static StringBuilder todas=new StringBuilder();
 
@@ -31,16 +29,18 @@ public class Main
             int opcion;
             do
             {
-                System.out.println("1. Inscribir jugadores");
-                System.out.println("2. inscribir equipos");
-                System.out.println("3. Salir");
-                System.out.print("Elige una opción: ");
-                opcion = sc.nextInt();
-                sc.nextLine();
+                String entrada = JOptionPane.showInputDialog(null, "menu principal\n"
+                                                                                        + "Elije una iopcion\n"
+                                                                                        + "1. Inscribir jugadores\n"
+                                                                                        + "2. inscribir equipos\n"
+                                                                                        + "3. salir");
+                opcion = Integer.parseInt(entrada);
+
+
 
                 switch (opcion) {
                     case 1 -> {
-                        // Guardar tarea
+
                         solicitarnombrejugador();
                         solicitarapellido();
                         solicitarnacionalidad();
@@ -48,6 +48,7 @@ public class Main
                         solicitarnickname();
                         solicitarrol();
                         solicitarsueldo();
+                        solicitarnombreequipo();
                         System.out.println("Tarea guardada correctamente.");
 
                     }
@@ -57,6 +58,7 @@ public class Main
                         solicitarnombreequipo();
                         solicitarfechafundacion();
                         solicitarjugadores();
+                        System.out.println("Tarea guardada correctamente.");
                     }
 
 
@@ -65,7 +67,7 @@ public class Main
 
                     default ->
                             System.out.println("Opción no válida.");
-                    // Excepción
+
                 }
             } while (opcion != 3);
         } catch (Exception e) {
@@ -79,8 +81,8 @@ public class Main
         do {
             try
             {
-                System.out.println("nombre del jugador");
-                nombre = sc.nextLine();
+
+                nombre = JOptionPane.showInputDialog(null, "Inscribir el nombre del jugador: ");
                 Pattern pattern = Pattern.compile("^[A-ZÁÉÍÓÚÄËÏÖÜÑ][a-záéíóúäëïöüñ ]+$");
                 Matcher matcher = pattern.matcher(nombre);
                 if (!matcher.matches())
@@ -90,7 +92,7 @@ public class Main
             }
             catch (DatoNoValidoException e)
             {
-                System.out.print("La primera letra mayuscula");
+                JOptionPane.showMessageDialog(null,"La primera letra mayuscula");
             }
         }
         while(error);
@@ -101,8 +103,7 @@ public class Main
         do {
             try
             {
-                System.out.println("apellido del jugador");
-                apellido = sc.nextLine();
+              apellido = JOptionPane.showInputDialog(null, "Inscribir apellido del jugador: ");
                 Pattern pattern = Pattern.compile("^[A-ZÁÉÍÓÚÄËÏÖÜÑ][a-záéíóúäëïöüñ ]+$");
                 Matcher matcher = pattern.matcher(apellido);
                 if (!matcher.matches())
@@ -112,7 +113,7 @@ public class Main
             }
             catch (DatoNoValidoException e)
             {
-                System.out.print("La primera letra mayuscula");
+                JOptionPane.showInputDialog("La primera letra mayuscula");
             }
         }
         while(error);
@@ -123,8 +124,7 @@ public class Main
         do {
             try
             {
-                System.out.println("Nacionalidad del jugador");
-                nacionalidad = sc.nextLine();
+                nacionalidad = JOptionPane.showInputDialog(null, "Inscribir el nacionalidad del jugador: ");
                 Pattern pattern = Pattern.compile("^[A-ZÁÉÍÓÚÄËÏÖÜÑ][a-záéíóúäëïöüñ ]+$");
                 Matcher matcher = pattern.matcher(nacionalidad);
                 if (!matcher.matches())
@@ -134,7 +134,7 @@ public class Main
             }
             catch (DatoNoValidoException e)
             {
-                System.out.print("La primera letra mayuscula");
+                JOptionPane.showInputDialog("La primera letra mayuscula");
             }
         }
         while(error);
@@ -144,18 +144,33 @@ public class Main
         boolean error = true;
         do {
             try {
-                System.out.println("Año de nacimiento");
-                int anno  = sc.nextInt();
-                System.out.println("Mes de nacimiento");
-                int mes  = sc.nextInt();
-                System.out.println("Día de nacimiento");
-                int dia  = sc.nextInt();
+
+                String annoq = JOptionPane.showInputDialog("Introduce el año de nacimiento");
+
+                Pattern pattern = Pattern.compile("^[A-ZÁÉÍÓÚÄËÏÖÜÑ][a-záéíóúäëïöüñ ]+$");
+                Matcher matcher = pattern.matcher(annoq);
+                if (!matcher.matches())
+                    throw new DatoNoValidoException();
+                error = false;
+                int anno  = Integer.parseInt(annoq);
+
+                String mesq = JOptionPane.showInputDialog("Introduce el mes de nacimiento");
+                int mes  = Integer.parseInt(mesq);
+                String diaq = JOptionPane.showInputDialog("Introduce el dia de nacimiento");
+                int dia  =  Integer.parseInt(diaq);
                 sc.nextLine();
                 fecha = LocalDate.of(anno, mes, dia);
                 error = false;
 
                 LocalDate hoy = LocalDate.now();
                 LocalDate fechaMayoriaEdad = hoy.minusYears(18);
+
+                if (fecha.isAfter(fechaMayoriaEdad)) {
+                    JOptionPane.showMessageDialog(null, "La nacimiento no puede ser anterior.");
+                    continue;
+
+                    // Volver al inicio del bucle
+                }
             }
             catch (InputMismatchException | DateTimeParseException e)
             {
@@ -170,8 +185,7 @@ public class Main
         do {
             try
             {
-                System.out.println("nick del jugador");
-                nickname = sc.nextLine();
+                nickname = JOptionPane.showInputDialog(null, "Inscribir el nickname: ");
                 Pattern pattern = Pattern.compile("^1[a-zA-Z0-9]+$");
                 Matcher matcher = pattern.matcher(nickname);
                 if (!matcher.matches())
@@ -192,8 +206,7 @@ public class Main
         do {
             try
             {
-                System.out.println("rol del jugador");
-                rol = sc.nextLine();
+                rol = JOptionPane.showInputDialog(null, "Inscribir rol: ");
                 Pattern pattern = Pattern.compile("^[a-zA-Z]+$");
                 Matcher matcher = pattern.matcher(rol);
                 if (!matcher.matches())
@@ -214,9 +227,7 @@ public class Main
         do {
             try
             {
-
-                System.out.println("sueldo del jugador");
-                String input = sc.nextLine();
+                String input = JOptionPane.showInputDialog(null,"Inscribir sueldo:");
                 Pattern pattern = Pattern.compile("^\\d+\\.?\\d*$");
                 Matcher matcher = pattern.matcher(input);
                 if (!matcher.matches())
@@ -239,8 +250,7 @@ public class Main
         do {
             try
             {
-                System.out.println("Nombre del equipo");
-                nombreequipo = sc.nextLine();
+                nombreequipo = JOptionPane.showInputDialog(null,"Inscribir nombre del equipo:");
                 Pattern pattern = Pattern.compile("^[A-ZÁÉÍÓÚÄËÏÖÜÑ][a-záéíóúäëïöüñ ]+$");
                 Matcher matcher = pattern.matcher(nombreequipo);
                 if (!matcher.matches())
@@ -262,15 +272,15 @@ public class Main
         boolean error = true;
         do {
             try {
-                System.out.println("Año de nacimiento");
-                int anno  = sc.nextInt();
-                System.out.println("Mes de nacimiento");
-                int mes  = sc.nextInt();
-                System.out.println("Día de nacimiento");
-                int dia  = sc.nextInt();
+
+                String annoq = JOptionPane.showInputDialog("Introduce el año de fundación del equipo");
+                int anno  = Integer.parseInt(annoq);
+                String mesq = JOptionPane.showInputDialog("Introduce el mes de fundación del equipo");
+                int mes  = Integer.parseInt(mesq);
+                String diaq = JOptionPane.showInputDialog("Introduce el dia de fundación del equipo");
+                int dia  =  Integer.parseInt(diaq);
                 sc.nextLine();
                 fechaequipo = LocalDate.of(anno, mes, dia);
-                error = false;
             }
             catch (InputMismatchException | DateTimeParseException e)
             {
@@ -286,8 +296,7 @@ public class Main
         do {
             try
             {
-                System.out.println("Nº de jugadores");
-                String input = sc.nextLine();
+                String input = JOptionPane.showInputDialog(null,"Introduce numero de juegadores");
                 Pattern pattern = Pattern.compile("^[2-6]$");
                 Matcher matcher = pattern.matcher(input);
                 if (!matcher.matches())
